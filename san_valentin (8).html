@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>San Valentín</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffd6e7;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Pokémon flotantes de fondo */
+        .pokemon-bg {
+            position: absolute;
+            opacity: 0.25;
+            animation: float 25s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(5deg);
+            }
+        }
+
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .heart-icon {
+            font-size: 60px;
+            color: #d4495d;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: 'Times New Roman', Times, serif;
+            color: #d4495d;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            font-weight: normal;
+            line-height: 1.3;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            position: relative;
+            min-height: 200px;
+            width: 100%;
+        }
+
+        button {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.1em;
+            padding: 15px 30px;
+            border: 2px solid #d4495d;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            width: 200px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #btnSi {
+            background-color: #d4495d;
+            color: white;
+            position: relative;
+            z-index: 100;
+        }
+
+        #btnSi:active {
+            background-color: #b83b4d;
+            transform: scale(0.95);
+        }
+
+        #btnNo {
+            background-color: white;
+            color: #666;
+            position: relative;
+        }
+        
+        #btnNo.moving {
+            position: absolute;
+        }
+
+        .message {
+            display: none;
+            animation: aparecer 0.8s ease-out;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .message.active {
+            display: block;
+        }
+
+        .plan-text {
+            font-size: 1.1em;
+            color: #333;
+            line-height: 1.7;
+            margin-top: 20px;
+            padding: 25px;
+            border: 2px solid #ffd6e7;
+            border-radius: 4px;
+            background-color: #fff9fb;
+            text-align: left;
+        }
+
+        .plan-text p {
+            margin-bottom: 12px;
+        }
+
+        .plan-text strong {
+            color: #d4495d;
+        }
+
+        /* Media queries para pantallas más grandes */
+        @media (min-width: 768px) {
+            .container {
+                padding: 60px 50px;
+            }
+
+            .heart-icon {
+                font-size: 80px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            .pokemon-bg {
+                opacity: 0.3;
+            }
+
+            button {
+                font-size: 1.2em;
+                padding: 15px 35px;
+            }
+
+            .plan-text {
+                font-size: 1.2em;
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .heart-icon {
+                font-size: 50px;
+            }
+
+            button {
+                font-size: 1em;
+                padding: 12px 25px;
+                width: 180px;
+            }
+
+            .plan-text {
+                font-size: 1em;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pokémon de fondo (solo los que funcionan bien) -->
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" class="pokemon-bg" style="top: 8%; left: 8%; width: 130px; animation-delay: 0s;" alt="Pikachu">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/501.png" class="pokemon-bg" style="top: 15%; right: 12%; width: 110px; animation-delay: 3s;" alt="Oshawott">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/393.png" class="pokemon-bg" style="bottom: 12%; left: 15%; width: 120px; animation-delay: 6s;" alt="Piplup">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/924.png" class="pokemon-bg" style="bottom: 20%; right: 8%; width: 100px; animation-delay: 9s;" alt="Tandemaus">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" class="pokemon-bg" style="top: 55%; left: 5%; width: 115px; animation-delay: 12s;" alt="Pikachu">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/393.png" class="pokemon-bg" style="top: 45%; right: 5%; width: 105px; animation-delay: 15s;" alt="Piplup">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/501.png" class="pokemon-bg" style="bottom: 45%; left: 8%; width: 125px; animation-delay: 18s;" alt="Oshawott">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/924.png" class="pokemon-bg" style="top: 30%; left: 12%; width: 95px; animation-delay: 7s;" alt="Tandemaus">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/924.png" class="pokemon-bg" style="bottom: 60%; right: 15%; width: 105px; animation-delay: 14s;" alt="Tandemaus">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" class="pokemon-bg" style="top: 70%; right: 18%; width: 120px; animation-delay: 10s;" alt="Pikachu">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/393.png" class="pokemon-bg" style="bottom: 35%; right: 20%; width: 110px; animation-delay: 16s;" alt="Piplup">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/501.png" class="pokemon-bg" style="top: 25%; left: 20%; width: 115px; animation-delay: 4s;" alt="Oshawott">
+
+    <div class="container">
+        <div id="pregunta" class="message active">
+            <div class="heart-icon">♥</div>
+            <h1>¿puedo ser tu san valentín?</h1>
+            <div class="buttons-container">
+                <button id="btnSi">SIIII ACEPTO</button>
+                <button id="btnNo">no:(</button>
+            </div>
+        </div>
+
+        <div id="respuesta" class="message">
+            <div class="heart-icon" style="font-size: 80px;">♥</div>
+            <h1>jejejej sabia que ibas a decir que si</h1>
+            <div class="plan-text">
+                <p><strong>plancito para san valentin:</strong></p>
+                <p>vemos una peli cuteee, como una romcom o lo que quieras</p>
+                <p>podemos vestirnos cute y hacer videollamadita</p>
+                <p>jugamos al stardewww</p>
+                <p>cenamos/merendamos lo mismo juntitas</p>
+                <p><strong>y es oficialmente una cita :))</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnSi = document.getElementById('btnSi');
+        const btnNo = document.getElementById('btnNo');
+        const pregunta = document.getElementById('pregunta');
+        const respuesta = document.getElementById('respuesta');
+        const container = document.querySelector('.buttons-container');
+        let primeraVez = true;
+
+        // Cuando hace click en Sí
+        btnSi.addEventListener('click', () => {
+            pregunta.classList.remove('active');
+            respuesta.classList.add('active');
+            createConfetti();
+        });
+
+        // Detectar tanto mouseover como touchstart para móviles
+        btnNo.addEventListener('mouseover', () => {
+            if (primeraVez) {
+                primeraVez = false;
+                btnNo.classList.add('moving');
+            }
+            moverBotonNo();
+        });
+
+        btnNo.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (primeraVez) {
+                primeraVez = false;
+                btnNo.classList.add('moving');
+            }
+            moverBotonNo();
+        });
+
+        btnNo.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (primeraVez) {
+                primeraVez = false;
+                btnNo.classList.add('moving');
+            }
+            moverBotonNo();
+        });
+
+        function moverBotonNo() {
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = btnNo.getBoundingClientRect();
+            const btnSiRect = btnSi.getBoundingClientRect();
+            
+            // Dimensiones del área disponible
+            const maxX = containerRect.width - btnRect.width - 20;
+            const maxY = containerRect.height - btnRect.height - 20;
+            
+            let newX, newY;
+            let intentos = 0;
+            
+            // Intentar encontrar una posición que no esté muy cerca del botón Sí
+            do {
+                newX = Math.random() * maxX;
+                newY = Math.random() * maxY;
+                intentos++;
+                
+                // Calcular la distancia desde el centro del botón Sí
+                const btnSiCenterX = btnSiRect.left - containerRect.left + btnSiRect.width / 2;
+                const btnSiCenterY = btnSiRect.top - containerRect.top + btnSiRect.height / 2;
+                const newCenterX = newX + btnRect.width / 2;
+                const newCenterY = newY + btnRect.height / 2;
+                
+                const distancia = Math.sqrt(
+                    Math.pow(newCenterX - btnSiCenterX, 2) + 
+                    Math.pow(newCenterY - btnSiCenterY, 2)
+                );
+                
+                // Si está lo suficientemente lejos (más de 150px) o ya intentamos mucho, usar esta posición
+                if (distancia > 150 || intentos > 10) {
+                    break;
+                }
+            } while (true);
+            
+            btnNo.style.left = newX + 'px';
+            btnNo.style.top = newY + 'px';
+        }
+
+        // Efecto confetti
+        function createConfetti() {
+            const shapes = ['♥', '♥', '♥'];
+            
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-50px';
+                    confetti.style.fontSize = Math.random() * 30 + 20 + 'px';
+                    confetti.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
+                    confetti.style.color = '#d4495d';
+                    confetti.style.opacity = '0.8';
+                    confetti.style.pointerEvents = 'none';
+                    confetti.style.zIndex = '1000';
+                    confetti.style.transition = 'all 3s ease-in';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.style.top = '120vh';
+                        confetti.style.transform = `rotate(${Math.random() * 720}deg)`;
+                        confetti.style.opacity = '0';
+                    }, 100);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3100);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
